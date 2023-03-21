@@ -42,6 +42,12 @@ const Dropdown = ({ options, multiple, onSelect}) => {
                             className={`dropdown-option ${selectedOptions.includes(option) ? 'selected' : ''}`}
                             onClick={() => handleOptionClick(option)}
                         >
+                            {multiple && (
+                                <input
+                                    type='checkbox'
+                                    checked={selectedOptions.includes(option)}  
+                                />
+                            )}
                             {option}
                         </div>
 
