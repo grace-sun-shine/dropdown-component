@@ -24,15 +24,15 @@ const Dropdown = ({ options, multiple, onSelect}) => {
                 setSelectedOptions(newSelectedOptions);
                 onSelect(newSelectedOptions);
             }
-
+            
         }
     }
 
     return (
         <div className='dropdown'> 
             <div className='dropdown-header' onClick={toggleDropdown}>
-            {selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select option(s)'}
-            <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}>&#9660;</span>
+                {selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select option(s)'}
+                <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}>&#9660;</span>
             </div>
             {isOpen && (
                 <div className='dropdown-body'>
