@@ -28,14 +28,32 @@ const Dropdown = ({ options, multiple, onSelect}) => {
         }
     }
 
+    const selectAll = () => {
+        setSelectedOptions(options);
+        onSelect(options);
+    }
+
+    const deselectAll = () => {
+        setSelectedOptions([]);
+        onSelect([]);
+    }
+
     return (
         <div className='dropdown'> 
-            <div className='dropdown-header' onClick={toggleDropdown}>
-                {selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select option(s)'}
+            <div className={`dropdown-header ${isOpen ? 'open' : ''}`} onClick={toggleDropdown}>
+                <div className = "dropdown-header-text">
+                    {selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select option(s)'}
+                </div>
                 <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}>&#9660;</span>
             </div>
             {isOpen && (
                 <div className='dropdown-body'>
+                    {multiple && (
+                        <div className='dropdown-body-actions'>
+                            <button onClick={selectAll}>Select All</button>
+                            <button onClick={deselectAll}>Deselect All</button>
+                        </div>
+                    )}
                     {options.map((option, index) => (
                         <div
                             key={index}
@@ -45,7 +63,8 @@ const Dropdown = ({ options, multiple, onSelect}) => {
                             {multiple && (
                                 <input
                                     type='checkbox'
-                                    checked={selectedOptions.includes(option)}  
+                                    checked={selectedOptions.includes(option)} 
+                                    onChange = {() => handleOptionClick(option)}
                                 />
                             )}
                             {option}
