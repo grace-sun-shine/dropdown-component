@@ -60,7 +60,7 @@ function App() {
       </div>
 
       <div className="display">
-        <h2>Search with large list:</h2>
+        <h2>Search with large list(100k items):</h2>
           <div className='column'>
             <h3>Multiple Selection</h3>
             <Dropdown

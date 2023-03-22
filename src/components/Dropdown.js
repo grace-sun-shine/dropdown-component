@@ -25,19 +25,6 @@ const Dropdown = ({
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
-    const updateDropUp = () => {
-        if (dropdownRef.current) {
-            const dropdownRect = dropdownRef.current.getBoundingClientRect();
-            const spaceBelow = window.innerHeight - dropdownRect.bottom;
-            const spaceAbove = dropdownRect.top;
-            if (spaceBelow < 300 && spaceAbove > spaceBelow) {
-                setDropUp(true);
-            } else {
-                setDropUp(false);
-            }
-        }
-    }
-
     const handleSearch = (e) => {
         setSearchValue(e.target.value);
         setFilteredOptions(options.filter((option) => option.toLowerCase().includes(e.target.value.toLowerCase())));
@@ -81,10 +68,27 @@ const Dropdown = ({
     }
 
     const clickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target) && event.target.type !== "checkbox") {
+        if (
+            dropdownRef.current &&
+            !dropdownRef.current.contains(event.target) &&
+            event.target.type !== "checkbox"
+        ) {
             setIsOpen(false);
         }
     };
+
+    const updateDropUp = () => {
+        if (dropdownRef.current) {
+            const dropdownRect = dropdownRef.current.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - dropdownRect.bottom;
+            const spaceAbove = dropdownRect.top;
+            if (spaceBelow < 300 && spaceAbove > spaceBelow) {
+                setDropUp(true);
+            } else {
+                setDropUp(false);
+            }
+        }
+    }
 
     useEffect(() => {
         document.addEventListener('click', clickOutside);
@@ -105,12 +109,12 @@ const Dropdown = ({
                 onClick={(e) => handleOptionClick(e, option)}
             >
                 {isMulti && (
-                        <input
-                            type='checkbox'
-                            checked={selectedOptions.includes(option)}
-                            onChange = {() => {}}
-                            onClick={(e) => handleOptionClick(e, option)}
-                        />
+                    <input
+                        type='checkbox'
+                        checked={selectedOptions.includes(option)}
+                        onChange={() => { }}
+                        onClick={(e) => handleOptionClick(e, option)}
+                    />
                 )}
                 {option}
             </div>

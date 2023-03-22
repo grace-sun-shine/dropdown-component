@@ -1,6 +1,7 @@
 # Hive Frontend Engineer Challenge
 
 This project contains the dropdown component. 
+
 Here is the instruction on how to run my project:
 
 1. Run `yarn start` to start the application, which displayed some usage of the dropdown component
@@ -8,6 +9,8 @@ Here is the instruction on how to run my project:
 3. `src/components/Dropdown.js` includes the code of the dropdown component
 
 ## Dropdown Component:
+
+The component supports both single selected option and multi selected options. The component also support large lists rendering. 
 
 ### Basic Usage:
 ```js
