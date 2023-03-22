@@ -2,18 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Dropdown.css';
 
 // create a reusable dropdown component
-const Dropdown = ({ 
+const Dropdown = ({
     options,
-    multiple = false,
-    onSelect = () => {},
+    multiple,
+    onSelect = () => { },
     value = multiple ? '' : [],
     placeholder = 'Select option(s)',
- }) => {
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState(Array.isArray(value) ? value : value ? [value] : []);
     const dropdownRef = useRef(null);
-
-    console.log(selectedOptions);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -36,15 +34,15 @@ const Dropdown = ({
         }
     }
 
-    const selectAll = () => {
-        setSelectedOptions(options);
-        onSelect(options);
-    }
-
-    const deselectAll = () => {
-        setSelectedOptions([]);
-        onSelect([]);
-    }
+    const handleSelectAllClick = (e) => {
+        if (e.target.checked) {
+            setSelectedOptions(options);
+            onSelect(options);
+        } else {
+            setSelectedOptions([]);
+            onSelect([]);
+        }
+    };
 
     const handlePlaceholder = () => {
         setSelectedOptions([]);
@@ -77,9 +75,12 @@ const Dropdown = ({
             {isOpen && (
                 <div className='dropdown-body'>
                     {multiple && (
-                        <div className='dropdown-body-actions'>
-                            <button onClick={selectAll}>Select All</button>
-                            <button onClick={deselectAll}>Deselect All</button>
+                        <div className='controls'>
+                            <input
+                                type="checkbox"
+                                checked={selectedOptions.length > 0}
+                                onChange={handleSelectAllClick}
+                            />
                         </div>
                     )}
                     {(!multiple) && (
