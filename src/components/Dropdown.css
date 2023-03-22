@@ -15,6 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 150px;
     max-width: 80vw;
   }
 

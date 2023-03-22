@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Dropdown.css';
 
 // create a reusable dropdown component
-const Dropdown = ({ options, multiple, onSelect}) => {
-    const [isOpen, setIsOpen] = React.useState(false);
-    const [selectedOptions, setSelectedOptions] = React.useState([]);
-
+const Dropdown = ({ options, multiple, onSelect }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const dropdownRef = useRef(null);
+    
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleOptionClick = (option) => {
@@ -13,7 +14,7 @@ const Dropdown = ({ options, multiple, onSelect}) => {
             setSelectedOptions([option]);
             onSelect(option);
             toggleDropdown();
-        }else{
+        } else {
             let newSelectedOptions;
             if (selectedOptions.includes(option)) {
                 newSelectedOptions = selectedOptions.filter((item) => item !== option)
@@ -24,7 +25,6 @@ const Dropdown = ({ options, multiple, onSelect}) => {
                 setSelectedOptions(newSelectedOptions);
                 onSelect(newSelectedOptions);
             }
-            
         }
     }
 
@@ -38,10 +38,24 @@ const Dropdown = ({ options, multiple, onSelect}) => {
         onSelect([]);
     }
 
+    const clickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', clickOutside);
+        return () => {
+            document.removeEventListener('click', clickOutside);
+        }
+    }, []);
+
+
     return (
-        <div className='dropdown'> 
+        <div className='dropdown' ref={dropdownRef}>
             <div className={`dropdown-header ${isOpen ? 'open' : ''}`} onClick={toggleDropdown}>
-                <div className = "dropdown-header-text">
+                <div className="dropdown-header-text">
                     {selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select option(s)'}
                 </div>
                 <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}>&#9660;</span>
@@ -63,8 +77,8 @@ const Dropdown = ({ options, multiple, onSelect}) => {
                             {multiple && (
                                 <input
                                     type='checkbox'
-                                    checked={selectedOptions.includes(option)} 
-                                    onChange = {() => handleOptionClick(option)}
+                                    checked={selectedOptions.includes(option)}
+                                    onChange={() => handleOptionClick(option)}
                                 />
                             )}
                             {option}
