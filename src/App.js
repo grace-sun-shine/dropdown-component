@@ -19,22 +19,54 @@ function App() {
   return (
     <div className='App'>
       <h1>Hive Frontend Engineer Challenge</h1>
+      <h2>Dropdown component</h2>
       <div className="display">
-        <h2>Multiple Selection Dropdown</h2>
-        <Dropdown 
-          options={option1} 
-          multiple={true} 
-          onSelect={(selectedItems) => console.log(selectedItems)} 
-          value = {defaultOption1}
-        />
-        
-        <h2>Single Selection Dropdown</h2>
-        <Dropdown 
-          options={option2} 
-          multiple={false} 
-          onSelect={(selectedItem) => console.log(selectedItem)} 
-        />
+        <h2>Basic:</h2>
+        <div className="row">
+          <div className='column'>
+            <h3>Multiple Selection</h3>
+            <Dropdown
+              options={option1}
+              multiple={true}
+              onSelect={(selectedItems) => console.log(selectedItems)}
+            />
+          </div>
+          <div className='column'>
+            <h3>Single Selection</h3>
+            <Dropdown
+              options={option2}
+              multiple={false}
+              onSelect={(selectedItem) => console.log(selectedItem)}
+            />
+          </div>
+        </div>
       </div>
+      <div className="display">
+        <h2>Basic with placeholder and value:</h2>
+        <div className="row">
+          <div className='column'>
+            <h3>Multiple Selection</h3>
+            <Dropdown
+              options={option1}
+              multiple={true}
+              onSelect={(selectedItems) => console.log(selectedItems)}
+              value={defaultOption1}
+              placeholder="Select some names"
+            />
+          </div>
+          <div className='column'>
+            <h3>Single Selection</h3>
+            <Dropdown
+              options={option2}
+              multiple={false}
+              onSelect={(selectedItem) => console.log(selectedItem)}
+              value={option2[1]}
+              placeholder="Age"
+            />
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }

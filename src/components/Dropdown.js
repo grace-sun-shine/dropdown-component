@@ -6,12 +6,14 @@ const Dropdown = ({
     options,
     multiple = false,
     onSelect = () => {},
-    value = multiple ? [] : '',
+    value = multiple ? '' : [],
     placeholder = 'Select option(s)',
  }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState(Array.isArray(value) ? value : value ? [value] : []);
     const dropdownRef = useRef(null);
+
+    console.log(selectedOptions);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
