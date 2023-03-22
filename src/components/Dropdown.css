@@ -65,6 +65,11 @@
     overflow-y: auto;
   }
 
+  .dropdown-body.dropup {
+    top: auto;
+    bottom: 100%;
+}
+
   .searchbox {
     display: flex;
     align-items: center;

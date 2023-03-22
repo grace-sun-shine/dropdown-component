@@ -14,9 +14,21 @@ const Dropdown = ({
     const [selectedOptions, setSelectedOptions] = useState(Array.isArray(value) ? value : value ? [value] : []);
     const [searchValue, setSearchValue] = useState('');
     const [filteredOptions, setFilteredOptions] = useState(options);
+    const [dropUp, setDropUp] = useState(false);
     const dropdownRef = useRef(null);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
+
+    const updateDropUp = () => {
+        const dropdownRect = dropdownRef.current.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - dropdownRect.bottom;
+        const spaceAbove = dropdownRect.top;
+        if (spaceBelow < 300 && spaceAbove > spaceBelow) {
+            setDropUp(true);
+        } else {
+            setDropUp(false);
+        }
+    }
 
     const handleSearch = (e) => {
         setSearchValue(e.target.value);
@@ -66,8 +78,11 @@ const Dropdown = ({
 
     useEffect(() => {
         document.addEventListener('click', clickOutside);
+        updateDropUp();
+        window.addEventListener('resize', updateDropUp);
         return () => {
             document.removeEventListener('click', clickOutside);
+            window.addEventListener('resize', updateDropUp);
         }
     }, []);
 
@@ -81,7 +96,7 @@ const Dropdown = ({
             </div>
 
             {isOpen && (
-                <div className='dropdown-body'>
+                <div className={`dropdown-body ${dropUp ? 'dropup' : ''}`}>
                     {multiple && (
                         <div className='dropdown-body-actions'>
                             <button onClick={selectAll}>Select All</button>
