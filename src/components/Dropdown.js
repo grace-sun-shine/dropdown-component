@@ -51,7 +51,6 @@ const Dropdown = ({ options, multiple, onSelect }) => {
         }
     }, []);
 
-
     return (
         <div className='dropdown' ref={dropdownRef}>
             <div className={`dropdown-header ${isOpen ? 'open' : ''}`} onClick={toggleDropdown}>

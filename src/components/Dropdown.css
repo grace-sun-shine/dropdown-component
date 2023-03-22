@@ -2,7 +2,7 @@
     position: relative;
     display: inline-block;
     user-select: none;
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     text-align: left;
   }
   
@@ -15,7 +15,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 150px;
     max-width: 80vw;
   }
 
@@ -28,8 +27,9 @@
   }
 
   .dropdown-header-text {
+    padding-right: 30px;
     overflow-x: auto;
-    max-width: calc(100% - 30px);
+    max-width: 100%;
   }
 
   .dropdown-arrow {
@@ -47,7 +47,7 @@
   }
 
   .dropdown-body input[type = "checkbox"] {
-    margin-right: 10px;
+    margin-right: 8px;
     cursor: pointer;
   }
   
@@ -56,10 +56,9 @@
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%;
+    min-width: 100%;
     z-index: 1;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-    margin-top: 4px;
     max-height: 200px;
     overflow-y: auto;
   }
@@ -71,8 +70,9 @@
     align-items: center;
     border:0;
     border-radius: 4px;
-    padding: 10px;
+    padding: 8px;
     margin: 5px;
+    margin-bottom: 0;
     width: calc(100% - 10px);
     cursor: pointer;
   }
@@ -85,6 +85,9 @@
     padding: 10px;
     cursor: pointer;
     transition: all 0.3s;
+    white-space: nowrap;
+    max-width: 80vw;
+    padding-right:20px;
   }
   
   .dropdown-option:hover {

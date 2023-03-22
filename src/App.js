@@ -2,8 +2,9 @@ import './App.css';
 import Dropdown from './components/Dropdown';
 
 function App() {
-  // const options = ['Oliver Hansen', 'Van Henry', 'April Tucker', 'Ralph Hubbard', 'twenty'];
-
+  const option1 = ['Oliver Hansen', 'Van Henry', 'April Tucker', 'Ralph Hubbard', 'Omar Alexander', 'Carlos Abbott', 'Miriam Wagner', 'Bradley Wilkerson', 'Virginia Andrews', 'Kelly Snyder'];
+  const option2 = ['None', 'Twenty', "Twenty one", "Twenty one and a half and a half and a half"]
+  
   // write a function to generate random names with given length
   const generateRandomNames = (length) => {
     const names = [];
@@ -13,16 +14,25 @@ function App() {
     return names;
   }
 
-  const options = generateRandomNames(10);
+  // const options = generateRandomNames(10);
 
   return (
     <div className='App'>
       <h1>Hive Frontend Engineer Challenge</h1>
       <div className="display">
         <h2>Multiple Selection Dropdown</h2>
-        <Dropdown options={options} multiple={true} onSelect={(selectedItems) => console.log(selectedItems)}/>
+        <Dropdown 
+          options={option1} 
+          multiple={true} 
+          onSelect={(selectedItems) => console.log(selectedItems)} 
+        />
+        
         <h2>Single Selection Dropdown</h2>
-        <Dropdown options={options} multiple={false} onSelect={(selectedItem) => console.log(selectedItem)}/>
+        <Dropdown 
+          options={option2} 
+          multiple={false} 
+          onSelect={(selectedItem) => console.log(selectedItem)} 
+        />
       </div>
     </div>
   );
