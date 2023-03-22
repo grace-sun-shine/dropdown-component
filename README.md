@@ -17,7 +17,7 @@ const option1 = ['Oliver Hansen', 'Van Henry', 'April Tucker', 'Ralph Hubbard'];
 
 <Dropdown
     options={option1}
-    multiple={true}
+    isMulti={true}
     onSelect={(selectedItems) => console.log(selectedItems)}
     />
 ```
@@ -28,7 +28,7 @@ The Dropdown component accepts the following props:
 | Prop        | Type            | Default            | Description                                         |
 |-------------|-----------------|--------------------|-----------------------------------------------------|
 | options     | array           | []                 | dropdown options                                    |
-| multiple    | bool            | false              | `true` for multi-select, `false`  for single-select |
+| isMulti    | bool            | false              | `true` for multi-select, `false`  for single-select |
 | onSelect    | function        | func               | callback function                                   |
 | value       | array or string | multiple ? '' :[]  | initial selected value(s)                           |
 | placeholder | string          | 'Select option(s)' | placeholder text                                    |

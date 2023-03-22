@@ -4,7 +4,7 @@
 }
 
 .display{
-  margin: 20px;
+  margin: 30px;
   text-align: left;
 }
 
@@ -12,15 +12,11 @@
   margin-bottom: 0;
 }
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-start;
-}
-
 .column {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   margin: 20px;
 }

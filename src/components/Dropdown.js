@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { FixedSizeList as List } from 'react-window';
+import { AutoSizer } from 'react-virtualized';
 import './Dropdown.css';
+
+const ITEM_HEIGHT = 40;
 
 // create a reusable dropdown component
 const Dropdown = ({
     options,
-    multiple,
+    isMulti,
     onSelect = () => { },
-    value = multiple ? '' : [],
+    value = isMulti ? '' : [],
     placeholder = 'Select option(s)',
     search = false,
 }) => {
@@ -17,16 +21,20 @@ const Dropdown = ({
     const [dropUp, setDropUp] = useState(false);
     const dropdownRef = useRef(null);
 
+    const listHeight = Math.min(200, filteredOptions.length * ITEM_HEIGHT);
+
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const updateDropUp = () => {
-        const dropdownRect = dropdownRef.current.getBoundingClientRect();
-        const spaceBelow = window.innerHeight - dropdownRect.bottom;
-        const spaceAbove = dropdownRect.top;
-        if (spaceBelow < 300 && spaceAbove > spaceBelow) {
-            setDropUp(true);
-        } else {
-            setDropUp(false);
+        if (dropdownRef.current) {
+            const dropdownRect = dropdownRef.current.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - dropdownRect.bottom;
+            const spaceAbove = dropdownRect.top;
+            if (spaceBelow < 300 && spaceAbove > spaceBelow) {
+                setDropUp(true);
+            } else {
+                setDropUp(false);
+            }
         }
     }
 
@@ -35,8 +43,10 @@ const Dropdown = ({
         setFilteredOptions(options.filter((option) => option.toLowerCase().includes(e.target.value.toLowerCase())));
     }
 
-    const handleOptionClick = (option) => {
-        if (!multiple) {
+    const handleOptionClick = (e, option) => {
+        e.stopPropagation();
+
+        if (!isMulti) {
             setSelectedOptions([option]);
             onSelect(option);
             toggleDropdown();
@@ -71,7 +81,7 @@ const Dropdown = ({
     }
 
     const clickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target) && event.target.type !== "checkbox") {
             setIsOpen(false);
         }
     };
@@ -86,6 +96,27 @@ const Dropdown = ({
         }
     }, []);
 
+    const Row = ({ index, style }) => {
+        const option = filteredOptions[index];
+        return (
+            <div
+                style={style}
+                className={`dropdown-option ${selectedOptions.includes(option) ? 'selected' : ''}`}
+                onClick={(e) => handleOptionClick(e, option)}
+            >
+                {isMulti && (
+                        <input
+                            type='checkbox'
+                            checked={selectedOptions.includes(option)}
+                            onChange = {() => {}}
+                            onClick={(e) => handleOptionClick(e, option)}
+                        />
+                )}
+                {option}
+            </div>
+        )
+    };
+
     return (
         <div className='dropdown' ref={dropdownRef}>
             <div className={`dropdown-header ${isOpen ? 'open' : ''}`} onClick={toggleDropdown}>
@@ -94,10 +125,9 @@ const Dropdown = ({
                 </div>
                 <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}>&#9660;</span>
             </div>
-
             {isOpen && (
                 <div className={`dropdown-body ${dropUp ? 'dropup' : ''}`}>
-                    {multiple && (
+                    {isMulti && (
                         <div className='dropdown-body-actions'>
                             <button onClick={selectAll}>Select All</button>
                             <button onClick={deselectAll}>Deselect All</button>
@@ -113,7 +143,7 @@ const Dropdown = ({
                             />
                         </div>
                     )}
-                    {(!multiple) && (
+                    {(!isMulti) && (
                         <div
                             className={`dropdown-option placeholder ${!selectedOptions.length ? ' selected' : ''}`}
                             onClick={handlePlaceholder}
@@ -121,24 +151,18 @@ const Dropdown = ({
                             {placeholder}
                         </div>
                     )}
-                    
-                    {filteredOptions.map((option, index) => (
-                        <div
-                            key={index}
-                            className={`dropdown-option ${selectedOptions.includes(option) ? 'selected' : ''}`}
-                            onClick={() => handleOptionClick(option)}
-                        >
-                            {multiple && (
-                                <input
-                                    type='checkbox'
-                                    checked={selectedOptions.includes(option)}
-                                    onChange={() => handleOptionClick(option)}
-                                />
-                            )}
-                            {option}
-                        </div>
-
-                    ))}
+                    <AutoSizer disableHeight>
+                        {({ width }) => (
+                            <List
+                                height={listHeight}
+                                itemCount={filteredOptions.length}
+                                itemSize={ITEM_HEIGHT}
+                                width={width}
+                            >
+                                {Row}
+                            </List>
+                        )}
+                    </AutoSizer>
                 </div>
             )}
         </div>
