@@ -1,11 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import './Dropdown.css';
 
 // create a reusable dropdown component
-const Dropdown = ({ options, multiple, onSelect }) => {
+const Dropdown = ({ options, multiple, onSelect, value, placeholder }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState(Array.isArray(value) ? value : value ? [value]: []);
     const dropdownRef = useRef(null);
+
+    Dropdown.propTypes = {
+        options: PropTypes.array.isRequired,
+        multiple: PropTypes.bool,
+        onSelect: PropTypes.func,
+        value: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.arrayOf(PropTypes.string)
+          ]),
+        placeholder: PropTypes.string,
+      };
+      
+    Dropdown.defaultProps = {
+        multiple: false,
+        onSelect: () => {},
+        value: [placeholder],
+        placeholder: 'Select option(s)',
+      };
     
     const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -55,7 +74,7 @@ const Dropdown = ({ options, multiple, onSelect }) => {
         <div className='dropdown' ref={dropdownRef}>
             <div className={`dropdown-header ${isOpen ? 'open' : ''}`} onClick={toggleDropdown}>
                 <div className="dropdown-header-text">
-                    {selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select option(s)'}
+                    {selectedOptions.length > 0 ? selectedOptions.join(', ') : placeholder}
                 </div>
                 <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}>&#9660;</span>
             </div>
