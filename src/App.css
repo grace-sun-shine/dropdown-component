@@ -1,9 +1,10 @@
-.App{
+.container{
   text-align: center;
+  margin: 20px;
 }
 
 .display{
-  margin: 50px;
+  margin: 20px;
   text-align: left;
 }
 

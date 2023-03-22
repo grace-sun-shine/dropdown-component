@@ -8,12 +8,20 @@ const Dropdown = ({
     onSelect = () => { },
     value = multiple ? '' : [],
     placeholder = 'Select option(s)',
+    search = false,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState(Array.isArray(value) ? value : value ? [value] : []);
+    const [searchValue, setSearchValue] = useState('');
+    const [filteredOptions, setFilteredOptions] = useState(options);
     const dropdownRef = useRef(null);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
+
+    const handleSearch = (e) => {
+        setSearchValue(e.target.value);
+        setFilteredOptions(options.filter((option) => option.toLowerCase().includes(e.target.value.toLowerCase())));
+    }
 
     const handleOptionClick = (option) => {
         if (!multiple) {
@@ -34,15 +42,15 @@ const Dropdown = ({
         }
     }
 
-    const handleSelectAllClick = (e) => {
-        if (e.target.checked) {
-            setSelectedOptions(options);
-            onSelect(options);
-        } else {
-            setSelectedOptions([]);
-            onSelect([]);
-        }
-    };
+    const selectAll = () => {
+        setSelectedOptions(options);
+        onSelect(options);
+    }
+
+    const deselectAll = () => {
+        setSelectedOptions([]);
+        onSelect([]);
+    }
 
     const handlePlaceholder = () => {
         setSelectedOptions([]);
@@ -75,12 +83,9 @@ const Dropdown = ({
             {isOpen && (
                 <div className='dropdown-body'>
                     {multiple && (
-                        <div className='controls'>
-                            <input
-                                type="checkbox"
-                                checked={selectedOptions.length > 0}
-                                onChange={handleSelectAllClick}
-                            />
+                        <div className='dropdown-body-actions'>
+                            <button onClick={selectAll}>Select All</button>
+                            <button onClick={deselectAll}>Deselect All</button>
                         </div>
                     )}
                     {(!multiple) && (
@@ -91,7 +96,17 @@ const Dropdown = ({
                             {placeholder}
                         </div>
                     )}
-                    {options.map((option, index) => (
+                    {search && (
+                        <div className='searchbox'>
+                            <input
+                                type="text"
+                                value={searchValue}
+                                onChange={handleSearch}
+                                placeholder="Search..."
+                            />
+                        </div>
+                    )}
+                    {filteredOptions.map((option, index) => (
                         <div
                             key={index}
                             className={`dropdown-option ${selectedOptions.includes(option) ? 'selected' : ''}`}

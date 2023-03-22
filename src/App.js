@@ -14,10 +14,10 @@ function App() {
     return names;
   }
 
-  // const options = generateRandomNames(10);
+  const options = generateRandomNames(100);
 
   return (
-    <div className='App'>
+    <div className='container'>
       <h1>Hive Frontend Engineer Challenge</h1>
       <h2>Dropdown component</h2>
       <div className="display">
@@ -34,13 +34,14 @@ function App() {
           <div className='column'>
             <h3>Single Selection</h3>
             <Dropdown
-              options={option2}
+              options={options}
               multiple={false}
               onSelect={(selectedItem) => console.log(selectedItem)}
             />
           </div>
         </div>
       </div>
+
       <div className="display">
         <h2>Basic with placeholder and value:</h2>
         <div className="row">
@@ -62,6 +63,30 @@ function App() {
               onSelect={(selectedItem) => console.log(selectedItem)}
               value={option2[1]}
               placeholder="Age"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="display">
+        <h2>Search:</h2>
+        <div className="row">
+          <div className='column'>
+            <h3>Multiple Selection</h3>
+            <Dropdown
+              options={option1}
+              multiple={true}
+              onSelect={(selectedItems) => console.log(selectedItems)}
+              search={true}
+            />
+          </div>
+          <div className='column'>
+            <h3>Single Selection</h3>
+            <Dropdown
+              options={options}
+              multiple={false}
+              onSelect={(selectedItem) => console.log(selectedItem)}
+              search = {true}
             />
           </div>
         </div>
