@@ -31,8 +31,8 @@ The Dropdown component accepts the following props:
 
 | Prop        | Type            | Default            | Description                                         |
 |-------------|-----------------|--------------------|-----------------------------------------------------|
-| options     | array           | []                 | dropdown options                                    |
-| isMulti    | bool            | false              | `true` for multi-select, `false`  for single-select |
+| options     | array           | (required)         | dropdown options                                    |
+| isMulti     | bool            | (required)          | `true` for multi-select, `false`  for single-select |
 | onSelect    | function        | func               | callback function                                   |
 | value       | array or string | multiple ? '' :[]  | initial selected value(s)                           |
 | placeholder | string          | 'Select option(s)' | placeholder text                                    |
