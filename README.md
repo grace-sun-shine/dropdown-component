@@ -1,4 +1,4 @@
-# Hive Frontend Engineer Challenge
+# Frontend Engineer Challenge
 
 This project contains the dropdown component. 
 
