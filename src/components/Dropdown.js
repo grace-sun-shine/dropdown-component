@@ -1,31 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import './Dropdown.css';
 
 // create a reusable dropdown component
-const Dropdown = ({ options, multiple, onSelect, value, placeholder }) => {
+const Dropdown = ({ 
+    options,
+    multiple = false,
+    onSelect = () => {},
+    value = multiple ? [] : '',
+    placeholder = 'Select option(s)',
+ }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOptions, setSelectedOptions] = useState(Array.isArray(value) ? value : value ? [value]: []);
+    const [selectedOptions, setSelectedOptions] = useState(Array.isArray(value) ? value : value ? [value] : []);
     const dropdownRef = useRef(null);
 
-    Dropdown.propTypes = {
-        options: PropTypes.array.isRequired,
-        multiple: PropTypes.bool,
-        onSelect: PropTypes.func,
-        value: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.arrayOf(PropTypes.string)
-          ]),
-        placeholder: PropTypes.string,
-      };
-      
-    Dropdown.defaultProps = {
-        multiple: false,
-        onSelect: () => {},
-        value: [placeholder],
-        placeholder: 'Select option(s)',
-      };
-    
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleOptionClick = (option) => {
@@ -57,6 +44,12 @@ const Dropdown = ({ options, multiple, onSelect, value, placeholder }) => {
         onSelect([]);
     }
 
+    const handlePlaceholder = () => {
+        setSelectedOptions([]);
+        onSelect([]);
+        toggleDropdown();
+    }
+
     const clickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setIsOpen(false);
@@ -78,12 +71,21 @@ const Dropdown = ({ options, multiple, onSelect, value, placeholder }) => {
                 </div>
                 <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}>&#9660;</span>
             </div>
+
             {isOpen && (
                 <div className='dropdown-body'>
                     {multiple && (
                         <div className='dropdown-body-actions'>
                             <button onClick={selectAll}>Select All</button>
                             <button onClick={deselectAll}>Deselect All</button>
+                        </div>
+                    )}
+                    {(!multiple) && (
+                        <div
+                            className={`dropdown-option ${!selectedOptions.length ? ' selected' : ''}`}
+                            onClick={handlePlaceholder}
+                        >
+                            {placeholder}
                         </div>
                     )}
                     {options.map((option, index) => (

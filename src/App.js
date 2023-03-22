@@ -3,7 +3,7 @@ import Dropdown from './components/Dropdown';
 
 function App() {
   const option1 = ['Oliver Hansen', 'Van Henry', 'April Tucker', 'Ralph Hubbard', 'Omar Alexander', 'Carlos Abbott', 'Miriam Wagner', 'Bradley Wilkerson', 'Virginia Andrews', 'Kelly Snyder'];
-  const option2 = ['None', 'Twenty', "Twenty one", "Twenty one and a half and a half and a half"]
+  const option2 = ['Twenty', "Twenty one", "Twenty one and a half and a half and a half"]
   const defaultOption1 = [option1[0], option1[2]];
   // write a function to generate random names with given length
   const generateRandomNames = (length) => {
@@ -26,7 +26,6 @@ function App() {
           multiple={true} 
           onSelect={(selectedItems) => console.log(selectedItems)} 
           value = {defaultOption1}
-          placeholder = "None"
         />
         
         <h2>Single Selection Dropdown</h2>
@@ -34,7 +33,6 @@ function App() {
           options={option2} 
           multiple={false} 
           onSelect={(selectedItem) => console.log(selectedItem)} 
-          value = {option2[0]}
         />
       </div>
     </div>
