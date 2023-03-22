@@ -103,14 +103,6 @@ const Dropdown = ({
                             <button onClick={deselectAll}>Deselect All</button>
                         </div>
                     )}
-                    {(!multiple) && (
-                        <div
-                            className={`dropdown-option ${!selectedOptions.length ? ' selected' : ''}`}
-                            onClick={handlePlaceholder}
-                        >
-                            {placeholder}
-                        </div>
-                    )}
                     {search && (
                         <div className='searchbox'>
                             <input
@@ -121,6 +113,15 @@ const Dropdown = ({
                             />
                         </div>
                     )}
+                    {(!multiple) && (
+                        <div
+                            className={`dropdown-option placeholder ${!selectedOptions.length ? ' selected' : ''}`}
+                            onClick={handlePlaceholder}
+                        >
+                            {placeholder}
+                        </div>
+                    )}
+                    
                     {filteredOptions.map((option, index) => (
                         <div
                             key={index}

@@ -7,7 +7,7 @@
   }
   
   .dropdown-header {
-    padding: 10px;
+    padding: 15px;
     background-color: #fff;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -104,12 +104,12 @@
   }
   
   .dropdown-option {
-    padding: 10px;
+    padding: 15px;
     cursor: pointer;
     transition: all 0.3s;
     white-space: nowrap;
     max-width: 80vw;
-    padding-right:20px;
+    padding-right: 20px;
   }
   
   .dropdown-option:hover {
@@ -117,5 +117,13 @@
   }
   
   .dropdown-option.selected {
+    background-color: #dff1fb;
+  }
+
+  .dropdown-option.placeholder {
+    font-style: italic;
+  }
+
+  .dropdown-option.placeholder.selected {
     background-color: #dff1fb;
   }
