@@ -142,7 +142,7 @@ const Dropdown = ({
                                 type="text"
                                 value={searchValue}
                                 onChange={handleSearch}
-                                placeholder="Search..."
+                                placeholder="Search"
                             />
                         </div>
                     )}
