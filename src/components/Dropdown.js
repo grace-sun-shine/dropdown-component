@@ -5,7 +5,6 @@ import './Dropdown.css';
 
 const ITEM_HEIGHT = 40;
 
-// create a reusable dropdown component
 const Dropdown = ({
     options,
     isMulti,
